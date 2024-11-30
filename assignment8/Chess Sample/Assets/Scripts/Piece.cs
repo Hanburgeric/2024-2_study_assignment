@@ -32,7 +32,8 @@ public abstract class Piece : MonoBehaviour
     {
         // direction에 따라 sprite를 결정하고, 방향을 결정함
         // --- TODO ---
-        
+        MySpriteRenderer.sprite = direction == 1 ? WhiteSprite : BlackSprite;
+        MySpriteRenderer.sortingOrder = 1;  // Prevents sprite from being covered by tiles
         // ------
     }
 
@@ -42,7 +43,12 @@ public abstract class Piece : MonoBehaviour
         // MyPos를 업데이트하고, targetPos로 이동
         // MyGameManager.Pieces를 업데이트
         // --- TODO ---
-        
+        MyGameManager.Pieces[MyPos.Item1, MyPos.Item2] = null;  // Seems awfully inefficient to do this, but whatever
+
+        MyPos = targetPos;
+        transform.position = Utils.ToRealPos(MyPos);
+
+        MyGameManager.Pieces[MyPos.Item1, MyPos.Item2] = this;
         // ------
     }
     
